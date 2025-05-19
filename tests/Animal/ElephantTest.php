@@ -34,6 +34,9 @@ final class ElephantTest extends TestCase
     {
         $elephant = new Elephant('Name');
         $this->expectException(Exception::class);
+        $this->expectExceptionMessage(
+            sprintf('%s cannot eat %s', 'Name', MealEnum::MEAT->value)
+        );
         $elephant->eat(MealEnum::MEAT);
     }
 

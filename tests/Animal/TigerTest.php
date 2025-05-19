@@ -37,8 +37,8 @@ public function testToString(): void
         $tiger = new Tiger('Tiger');
         $this->expectException(Exception::class);
         $this->expectExceptionMessage(
-        sprintf('%s cannot eat %s', 'Tiger', MealEnum::VEGETABLES->value)
-    );
+            sprintf('%s cannot eat %s', 'Tiger', MealEnum::VEGETABLES->value)
+        );
         $tiger->eat(MealEnum::VEGETABLES);
     }
 
