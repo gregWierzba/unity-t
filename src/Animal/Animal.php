@@ -6,7 +6,11 @@ namespace UnitryT\Animal;
 
 use UnitryT\Diet\DietTypes;
 use UnitryT\Diet\MealEnum;
+use InvalidArgumentException;
 
+/**
+ * Abstract class for all animals
+ */
 abstract class Animal
 {
     public function __construct(
@@ -30,7 +34,7 @@ abstract class Animal
     public function eat(MealEnum $meal): string
     {
         if (!$this->canEat($meal)) {
-            throw new \InvalidArgumentException(sprintf('%s cannot eat %s', $this->name, $meal->value));
+            throw new InvalidArgumentException(sprintf('%s cannot eat %s', $this->name, $meal->value));
         }
 
         return $this->name . ' eats ' . $meal->value;

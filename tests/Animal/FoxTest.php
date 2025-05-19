@@ -7,7 +7,6 @@ namespace UnitryT\Tests\Animal;
 use PHPUnit\Framework\TestCase;
 use UnitryT\Animal\Fox;
 use UnitryT\Diet\MealEnum;
-use Exception;
 
 final class FoxTest extends TestCase
 {
@@ -29,5 +28,11 @@ final class FoxTest extends TestCase
         $fox = new Fox('Name');
         $this->assertEquals('Name eats mięso', $fox->eat(MealEnum::MEAT));
         $this->assertEquals('Name eats rośliny', $fox->eat(MealEnum::VEGETABLES));
+    }
+
+    public function testGroom(): void
+    {
+        $fox = new Fox('Name');
+        $this->assertEquals('Name is being groomed', $fox->groom());
     }
 }
