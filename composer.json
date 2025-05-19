@@ -1,0 +1,24 @@
+{
+    "name": "grzesiek/unitry-t",
+    "description": "Unitry T",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "UnitryT\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "gregW",
+            "email": "greg.m.wierzba@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^12.1",
+        "phpstan/phpstan": "^2.1",
+        "friendsofphp/php-cs-fixer": "^3.75"
+    }
+}

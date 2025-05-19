@@ -1,0 +1,26 @@
+# Composer
+/vendor/
+/composer.lock
+
+# Node modules (if any)
+/node_modules/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE files
+/.idea/
+/.vscode/
+
+# PHPUnit
+.phpunit.result.cache
+
+# PhpCsFixer
+.php-cs-fixer.cache
+
+# Logs
+*.log
+
+# Cache
+/cache/
