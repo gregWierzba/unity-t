@@ -15,6 +15,8 @@ enum DietTypes: string
 
     /**
      * Returns the meals that the animal can eat
+     *
+     * @return MealEnum[]
      */
     public function meals(): array
     {

@@ -12,7 +12,7 @@ enum Species: string
     case ELEPHANT = 'Słoń';
     case TIGER = 'Tygrys';
     case FOX = 'Lis';
-    case RHINO = 'Rhinocerus';
+    case RHINO = 'Nosorożec';
     case SNOW_LEOPARD = 'Irbis śnieżny';
     case RABBIT = 'Królik';
 }

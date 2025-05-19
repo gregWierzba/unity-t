@@ -8,6 +8,9 @@ use UnitryT\Diet\MealEnum;
 use PHPUnit\Framework\TestCase;
 use UnitryT\Animal\Elephant;
 use UnitryT\Animal\Fox;
+use InvalidArgumentException;
+use stdClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class ZooTest extends TestCase
 {
@@ -47,48 +50,70 @@ final class ZooTest extends TestCase
     }
 
     /**
-     * Test feeding animals
+     * Test constructor with invalid animals
      */
-    public function testFeedAnimals(): void
+    public function testConstructorWithInvalidAnimals(): void
     {
-        $this->zoo->addAnimal(new Tiger('Name'));
-        $this->zoo->addAnimal(new Tiger('Name2'));
-
-        $this->assertEquals(['Name eats mięso', 'Name2 eats mięso'], $this->zoo->feedAnimals(MealEnum::MEAT));
+        $this->expectException(InvalidArgumentException::class);
+        $this->zoo = new Zoo([new Tiger('Name'), new stdClass()]);
     }
 
     /**
-     * Test feeding carnivore animals with vegetables
+     * Animal provider
      */
-    public function testFeedCarnivoreAnimalsWithVegetables(): void
+    public static function provideAnimalData(): array
     {
-        $this->zoo->addAnimal(new Tiger('Name'));
-        $this->zoo->addAnimal(new Tiger('Name2'));
-
-        $this->assertEquals([], $this->zoo->feedAnimals(MealEnum::VEGETABLES));
+        return [
+            'carnivores with meat' => [
+                [new Tiger('Name'), new Tiger('Name2')],
+                MealEnum::MEAT,
+                ['Name eats mięso', 'Name2 eats mięso']
+            ],
+            'carnivores with vegetables' => [
+                [new Tiger('Name'), new Tiger('Name2')],
+                MealEnum::VEGETABLES,
+                []
+            ],
+            'herbivores with meat' => [
+                [new Elephant('Name'), new Elephant('Name2')],
+                MealEnum::MEAT,
+                []
+            ],
+            'omnivores with meat' => [
+                [new Fox('Name'), new Fox('Name2')],
+                MealEnum::MEAT,
+                ['Name eats mięso', 'Name2 eats mięso']
+            ],
+            'omnivores with vegetables' => [
+                [new Fox('Name'), new Fox('Name2')],
+                MealEnum::VEGETABLES,
+                ['Name eats rośliny', 'Name2 eats rośliny']
+            ],
+            'mixed animals' => [
+                [new Tiger('Name'), new Fox('Name2'), new Elephant('Name3')],
+                MealEnum::MEAT,
+                ['Name eats mięso', 'Name2 eats mięso']
+            ],
+            'mixed animals with vegetables' => [
+                [new Tiger('Name'), new Fox('Name2'), new Elephant('Name3')],
+                MealEnum::VEGETABLES,
+                ['Name2 eats rośliny', 'Name3 eats rośliny']
+            ]
+        ];
     }
 
     /**
-     * Test feeding herbivore animals with meat
+     * Test feeding animals with a given meal
      */
-    public function testFeedHerbivoreAnimalsWithMeat(): void
+     #[DataProvider('provideAnimalData')]
+    public function testFeedAnimals(array $animals, MealEnum $meal, array $expected): void
     {
-        $this->zoo->addAnimal(new Elephant('Name'));
-        $this->zoo->addAnimal(new Elephant('Name2'));
+        foreach ($animals as $animal) {
+            $this->zoo->addAnimal($animal);
+        }
 
-        $this->assertEquals([], $this->zoo->feedAnimals(MealEnum::MEAT));
-    }
-
-    /**
-     * Test feeding omnivore animals with meat and vegetables
-     */
-    public function testFeedOmnivoreAnimalsWithMeatAndVegetables(): void
-    {
-        $this->zoo->addAnimal(new Fox('Name'));
-        $this->zoo->addAnimal(new Fox('Name2'));
-
-        $this->assertEquals(['Name eats mięso', 'Name2 eats mięso'], $this->zoo->feedAnimals(MealEnum::MEAT));
-        $this->assertEquals(['Name eats rośliny', 'Name2 eats rośliny'], $this->zoo->feedAnimals(MealEnum::VEGETABLES));
+        // Use array_values to compare arrays by value
+        $this->assertEquals(array_values($expected), array_values($this->zoo->feedAnimals($meal)));
     }
 
     /**

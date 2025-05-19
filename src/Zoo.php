@@ -16,6 +16,11 @@ final class Zoo
     public function __construct(
         private array $animals = []
     ) {
+        foreach ($this->animals as $animal) {
+            if (!$animal instanceof Animal) {
+                throw new \InvalidArgumentException('All elements must be instances of Animal');
+            }
+        }
     }
 
     /**
@@ -28,7 +33,7 @@ final class Zoo
 
     /**
      * Returns all animals in the zoo
-     * 
+     *
      * @return Animal[]
      */
     public function getAnimals(): array
@@ -39,6 +44,8 @@ final class Zoo
     /**
      * Feeds the animals with the given meal
      * If the animal can't eat the meal, it will be ignored
+     *
+     * @return string[] Array of messages describing what each animal ate
      */
     public function feedAnimals(MealEnum $meal): array
     {
@@ -51,6 +58,8 @@ final class Zoo
 
     /**
      * Grooms the animals that can be groomed, if they are FurBearerAnimal
+     *
+     * @return string[] Array of messages describing what each animal was groomed
      */
     public function groomAnimals(): array
     {

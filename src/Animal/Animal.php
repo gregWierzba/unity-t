@@ -8,7 +8,7 @@ use UnitryT\Diet\DietTypes;
 use UnitryT\Diet\MealEnum;
 
 abstract class Animal
-{   
+{
     public function __construct(
         public readonly string $name,
         public readonly Species $species,

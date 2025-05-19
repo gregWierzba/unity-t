@@ -9,11 +9,12 @@ use Exception;
 
 final class TigerTest extends TestCase
 {
-    public function testToString(): void
-    {
-        $tiger = new Tiger('Tiger');
-        $this->assertEquals('Tygrys Tiger', $tiger);
-    }
+public function testToString(): void
+ {
+     $tiger = new Tiger('Tiger');
+    // "Tygrys" is the Polish translation from Species::TIGER->value
+     $this->assertEquals('Tygrys Tiger', $tiger);
+ }
 
     public function testCanEat(): void
     {
@@ -25,14 +26,19 @@ final class TigerTest extends TestCase
     public function testEat(): void
     {
         $tiger = new Tiger('Tiger');
-        $this->assertEquals('Tiger eats mięso', $tiger->eat(MealEnum::MEAT));
+        $this->assertEquals(
+        'Tiger eats ' . MealEnum::MEAT->value,
+        $tiger->eat(MealEnum::MEAT)
+    );
     }
 
     public function testCannotEat(): void
     {
         $tiger = new Tiger('Tiger');
         $this->expectException(Exception::class);
-        $this->expectExceptionMessage('Tiger cannot eat rośliny');
+        $this->expectExceptionMessage(
+        sprintf('%s cannot eat %s', 'Tiger', MealEnum::VEGETABLES->value)
+    );
         $tiger->eat(MealEnum::VEGETABLES);
     }
 
