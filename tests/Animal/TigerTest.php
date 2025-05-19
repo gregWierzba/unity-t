@@ -5,46 +5,45 @@ namespace UnitryT\Tests\Animal;
 use PHPUnit\Framework\TestCase;
 use UnitryT\Animal\Tiger;
 use UnitryT\Diet\MealEnum;
-use Exception;
+use InvalidArgumentException;
 
 final class TigerTest extends TestCase
 {
-public function testToString(): void
- {
-     $tiger = new Tiger('Tiger');
-    // "Tygrys" is the Polish translation from Species::TIGER->value
-     $this->assertEquals('Tygrys Tiger', $tiger);
- }
+    public function testToString(): void
+    {
+        $tiger = new Tiger('Name');
+        $this->assertEquals('Tygrys Name', $tiger);
+    }
 
     public function testCanEat(): void
     {
-        $tiger = new Tiger('Tiger');
+        $tiger = new Tiger('Name');
         $this->assertTrue($tiger->canEat(MealEnum::MEAT));
         $this->assertFalse($tiger->canEat(MealEnum::VEGETABLES));
     }
 
     public function testEat(): void
     {
-        $tiger = new Tiger('Tiger');
+        $tiger = new Tiger('Name');
         $this->assertEquals(
-        'Tiger eats ' . MealEnum::MEAT->value,
+        'Name eats ' . MealEnum::MEAT->value,
         $tiger->eat(MealEnum::MEAT)
     );
     }
 
     public function testCannotEat(): void
     {
-        $tiger = new Tiger('Tiger');
-        $this->expectException(Exception::class);
+        $tiger = new Tiger('Name');
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
-            sprintf('%s cannot eat %s', 'Tiger', MealEnum::VEGETABLES->value)
+            sprintf('%s cannot eat %s', 'Name', MealEnum::VEGETABLES->value)
         );
         $tiger->eat(MealEnum::VEGETABLES);
     }
 
     public function testGroom(): void
     {
-        $tiger = new Tiger('Tiger');
-        $this->assertEquals('Tiger is being groomed', $tiger->groom());
+        $tiger = new Tiger('Name');
+        $this->assertEquals('Name is being groomed', $tiger->groom());
     }
 }
