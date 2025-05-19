@@ -11,7 +11,7 @@ enum Species: string
 {
     case ELEPHANT = 'Słoń';
     case TIGER = 'Tygrys';
-    case FOX = 'Wilk';
+    case FOX = 'Lis';
     case RHINO = 'Rhinocerus';
     case SNOW_LEOPARD = 'Irbis śnieżny';
     case RABBIT = 'Królik';

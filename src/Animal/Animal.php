@@ -30,7 +30,7 @@ abstract class Animal
     public function eat(MealEnum $meal): string
     {
         if (!$this->canEat($meal)) {
-            throw new \Exception('Animal cannot eat this meal');
+            throw new \Exception(sprintf('%s cannot eat %s', $this->name, $meal->value));
         }
 
         return $this->name . ' eats ' . $meal->value;

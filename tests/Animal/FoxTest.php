@@ -14,7 +14,7 @@ final class FoxTest extends TestCase
     public function testToString(): void
     {
         $fox = new Fox('Name');
-        $this->assertEquals('Wilk Name', $fox);
+        $this->assertEquals('Lis Name', $fox);
     }
 
     public function testCanEat(): void

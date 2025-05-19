@@ -28,6 +28,8 @@ final class Zoo
 
     /**
      * Returns all animals in the zoo
+     * 
+     * @return Animal[]
      */
     public function getAnimals(): array
     {
@@ -40,12 +42,11 @@ final class Zoo
      */
     public function feedAnimals(MealEnum $meal): array
     {
-        $result = [];
         $animals = array_filter($this->animals, fn (Animal $animal) => $animal->canEat($meal));
-        foreach ($animals as $animal) {
-            $result[] = $animal->eat($meal);
-        }
-        return $result;
+        return array_map(
+            fn (Animal $animal) => $animal->eat($meal),
+            $animals
+        );
     }
 
     /**
@@ -53,12 +54,10 @@ final class Zoo
      */
     public function groomAnimals(): array
     {
-        $result = [];
         $groomableAnimals = array_filter($this->animals, fn (Animal $animal) => $animal instanceof FurBearerAnimal);
-        foreach ($groomableAnimals as $groomableAnimal) {
-            /** @var FurBearerAnimal $groomableAnimal */
-            $result[] = $groomableAnimal->groom();
-        }
-        return $result;
+        return array_map(
+            fn (FurBearerAnimal $animal) => $animal->groom(),
+            $groomableAnimals
+        );
     }
 }

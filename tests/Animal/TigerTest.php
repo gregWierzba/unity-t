@@ -32,6 +32,7 @@ final class TigerTest extends TestCase
     {
         $tiger = new Tiger('Tiger');
         $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Tiger cannot eat rośliny');
         $tiger->eat(MealEnum::VEGETABLES);
     }
 

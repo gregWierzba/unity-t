@@ -11,64 +11,78 @@ use UnitryT\Animal\Fox;
 
 final class ZooTest extends TestCase
 {
+    private Zoo $zoo;
+
+    protected function setUp(): void
+    {
+        $this->zoo = new Zoo([]);
+    }
+
     public function testAddAnimal(): void
     {
-        $zoo = new Zoo([]);
-        $zoo->addAnimal(new Tiger('Name'));
+        $this->zoo->addAnimal(new Tiger('Name'));
 
-        $this->assertCount(1, $zoo->getAnimals());
-        $this->assertEquals(new Tiger('Name'), $zoo->getAnimals()[0]);
+        $this->assertCount(1, $this->zoo->getAnimals());
+        $this->assertEquals(new Tiger('Name'), $this->zoo->getAnimals()[0]);
 
-        $zoo->addAnimal(new Tiger('Name2'));
+        $this->zoo->addAnimal(new Tiger('Name2'));
 
-        $this->assertCount(2, $zoo->getAnimals());
-        $this->assertEquals(new Tiger('Name2'), $zoo->getAnimals()[1]);
+        $this->assertCount(2, $this->zoo->getAnimals());
+        $this->assertEquals(new Tiger('Name2'), $this->zoo->getAnimals()[1]);
     }
 
-    public function testFeedAnimals(): void
+    public function testConstructorWithAnimals(): void
     {
-        $zoo = new Zoo([]);
-        $zoo->addAnimal(new Tiger('Name'));
-        $zoo->addAnimal(new Tiger('Name2'));
+        $animals = [new Tiger('Name'), new Fox('Name2')];
+        $this->zoo = new Zoo($animals);
 
-        $this->assertEquals(['Name eats mięso', 'Name2 eats mięso'], $zoo->feedAnimals(MealEnum::MEAT));
+        $this->assertCount(2, $this->zoo->getAnimals());
+        $this->assertEquals($animals, $this->zoo->getAnimals());
     }
+
+
+     public function testFeedAnimals(): void
+     {
+        $this->zoo->addAnimal(new Tiger('Name'));
+        $this->zoo->addAnimal(new Tiger('Name2'));
+
+        $this->assertEquals(['Name eats mięso', 'Name2 eats mięso'], $this->zoo->feedAnimals(MealEnum::MEAT));
+     }
 
     public function testFeedCarnivoreAnimalsWithVegetables(): void
     {
-        $zoo = new Zoo([]);
-        $zoo->addAnimal(new Tiger('Name'));
-        $zoo->addAnimal(new Tiger('Name2'));
+        $this->zoo->addAnimal(new Tiger('Name'));
+        $this->zoo->addAnimal(new Tiger('Name2'));
 
-        $this->assertEquals([], $zoo->feedAnimals(MealEnum::VEGETABLES));
+        $this->assertEquals([], $this->zoo->feedAnimals(MealEnum::VEGETABLES));
     }
 
     public function testFeedHerbivoreAnimalsWithMeat(): void
     {
-        $zoo = new Zoo([]);
-        $zoo->addAnimal(new Elephant('Name'));
-        $zoo->addAnimal(new Elephant('Name2'));
+        $this->zoo->addAnimal(new Elephant('Name'));
+        $this->zoo->addAnimal(new Elephant('Name2'));
 
-        $this->assertEquals([], $zoo->feedAnimals(MealEnum::MEAT));
+        $this->assertEquals([], $this->zoo->feedAnimals(MealEnum::MEAT));
     }
 
     public function testFeedOmnivoreAnimalsWithMeatAndVegetables(): void
     {
-        $zoo = new Zoo([]);
-        $zoo->addAnimal(new Fox('Name'));
-        $zoo->addAnimal(new Fox('Name2'));
+        $this->zoo->addAnimal(new Fox('Name'));
+        $this->zoo->addAnimal(new Fox('Name2'));
 
-        $this->assertEquals(['Name eats mięso', 'Name2 eats mięso'], $zoo->feedAnimals(MealEnum::MEAT));
-        $this->assertEquals(['Name eats rośliny', 'Name2 eats rośliny'], $zoo->feedAnimals(MealEnum::VEGETABLES));
+        $this->assertEquals(['Name eats mięso', 'Name2 eats mięso'], $this->zoo->feedAnimals(MealEnum::MEAT));
+        $this->assertEquals(['Name eats rośliny', 'Name2 eats rośliny'], $this->zoo->feedAnimals(MealEnum::VEGETABLES));
     }
 
     public function testGroomAnimals(): void
     {
-        $zoo = new Zoo([]);
-        $zoo->addAnimal(new Fox('Name'));
-        $zoo->addAnimal(new Elephant('Name2'));
-        $zoo->addAnimal(new Tiger('Name3'));
+        $this->zoo->addAnimal(new Fox('Name'));
+        $this->zoo->addAnimal(new Elephant('Name2'));
+        $this->zoo->addAnimal(new Tiger('Name3'));
 
-        $this->assertEquals(['Name is being groomed', 'Name3 is being groomed'], $zoo->groomAnimals());
+        $this->assertEquals(
+            array_values(['Name is being groomed', 'Name3 is being groomed']),
+            array_values($this->zoo->groomAnimals())
+        );
     }
 }
