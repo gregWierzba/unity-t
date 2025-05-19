@@ -7,7 +7,7 @@ namespace UnitryT\Tests\Animal;
 use PHPUnit\Framework\TestCase;
 use UnitryT\Animal\Elephant;
 use UnitryT\Diet\MealEnum;
- use Exception;
+use Exception;
 use InvalidArgumentException;
 
 final class ElephantTest extends TestCase
