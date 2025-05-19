@@ -11,7 +11,7 @@ abstract class Animal
 {   
     public function __construct(
         public readonly string $name,
-        public readonly Species $specie,
+        public readonly Species $species,
         public readonly DietTypes $diet
     ) {
     }
@@ -21,7 +21,7 @@ abstract class Animal
      */
     public function __toString(): string
     {
-        return $this->specie->value . ' ' . $this->name;
+        return $this->species->value . ' ' . $this->name;
     }
 
     /**
@@ -30,7 +30,7 @@ abstract class Animal
     public function eat(MealEnum $meal): string
     {
         if (!$this->canEat($meal)) {
-            throw new \Exception(sprintf('%s cannot eat %s', $this->name, $meal->value));
+            throw new \InvalidArgumentException(sprintf('%s cannot eat %s', $this->name, $meal->value));
         }
 
         return $this->name . ' eats ' . $meal->value;
