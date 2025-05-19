@@ -26,8 +26,14 @@ final class FoxTest extends TestCase
     public function testEat(): void
     {
         $fox = new Fox('Name');
-        $this->assertEquals('Name eats mięso', $fox->eat(MealEnum::MEAT));
-        $this->assertEquals('Name eats rośliny', $fox->eat(MealEnum::VEGETABLES));
+        $this->assertEquals(
+            'Name eats ' . MealEnum::MEAT->value,
+            $fox->eat(MealEnum::MEAT)
+        );
+        $this->assertEquals(
+            'Name eats ' . MealEnum::VEGETABLES->value,
+            $fox->eat(MealEnum::VEGETABLES)
+        );
     }
 
     public function testGroom(): void

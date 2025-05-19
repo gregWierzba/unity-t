@@ -7,7 +7,8 @@ namespace UnitryT\Tests\Animal;
 use PHPUnit\Framework\TestCase;
 use UnitryT\Animal\Elephant;
 use UnitryT\Diet\MealEnum;
-use Exception;
+ use Exception;
+use InvalidArgumentException;
 
 final class ElephantTest extends TestCase
 {
@@ -27,7 +28,10 @@ final class ElephantTest extends TestCase
     public function testEat(): void
     {
         $elephant = new Elephant('Name');
-        $this->assertEquals('Name eats rośliny', $elephant->eat(MealEnum::VEGETABLES));
+        $this->assertEquals(
+            'Name eats ' . MealEnum::VEGETABLES->value,
+            $elephant->eat(MealEnum::VEGETABLES)
+        );
     }
 
     public function testCannotEat(): void

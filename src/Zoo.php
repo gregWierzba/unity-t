@@ -11,7 +11,7 @@ use UnitryT\Animal\FurBearerAnimal;
 final class Zoo
 {
     /**
-     * @var Animal[]
+     * @param Animal[] $animals
      */
     public function __construct(
         private array $animals = []

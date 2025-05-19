@@ -13,12 +13,19 @@ use InvalidArgumentException;
  */
 abstract class Animal
 {
-    public function __construct(
-        public readonly string $name,
-        public readonly Species $species,
-        public readonly DietTypes $diet
-    ) {
-    }
+    /**
+     * Creates a new animal instance
+     *
+     * @param string $name The name of the animal
+     * @param Species $species The species of the animal
+     * @param DietTypes $diet The diet type of the animal
+     */
+     public function __construct(
+         public readonly string $name,
+         public readonly Species $species,
+         public readonly DietTypes $diet
+     ) {
+     }
 
     /**
      * Returns the animal's specie and name

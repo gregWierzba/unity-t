@@ -112,7 +112,7 @@ final class ZooTest extends TestCase
             $this->zoo->addAnimal($animal);
         }
 
-        // Use array_values to compare arrays by value
+        // Use array_values to reset array keys for consistent comparison
         $this->assertEquals(array_values($expected), array_values($this->zoo->feedAnimals($meal)));
     }
 
